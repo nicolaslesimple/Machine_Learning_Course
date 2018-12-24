@@ -1,0 +1,63 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww16840\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs28 \cf0 READ ME\
+
+\b0\fs24 This file shows the different notebooks and how they are used to obtain our best submission for the road segmentation.\
+The model which gives us the best performance is the model \'93best.h5\'94 coupled with a neighbourhood based post-processing. The model can be used using TEST_SAVED_MODEL.IPYNB, the model is stored in Models/.\
+To train the best model, just run the TRAIN.IPYNB, the model will be saved in the Models/ directory. The training process for this submission takes approximately 25 hours without GPU. In the TEST_SAVED_MODEL.IPYNB, load the model and apply neighbourhood post-processing.\
+\
+
+\b TRAIN.IPYNB
+\b0 \
+*****************\
+This file allows training of a model as well as testing on the test images.\
+1. 
+\i Import_images
+\i0  : Imports images from the folder specified in the function. \
+2. 
+\i data_augmentation
+\i0  : Function used to rotate images and add them to the pool of images.\
+3. 
+\i Preprocessing
+\i0  : Yields windows of size window_size from randomly chosen images as well as classification of the 16x16 pixels patch in the center (road/non-road). Used in the fit_generator of the model for each epoch. \
+4. 
+\i Learn 
+\i0 : Define model (Sequential), compile, fit and save the model.\
+5. 
+\i Test
+\i0  : Tests the model on the trained model. Divides test images in windows to be classified by the model and creates a prediction vector.\
+6. 
+\i visualize_prediction
+\i0  : Allows visualisation of the predicted patches on top of test images.\
+7. 
+\i create_submission 
+\i0 : Saves the prediction vector in a csv file with IDs.\
+\
+
+\b TEST_SAVED_MODEL.IPYNB
+\b0 \
+************************************\
+This file allows to load a previously trained model and apply post-processing on tests.\
+1. 
+\i model = load_model
+\i0  : load saved model. Takes input path to model.\
+2. 
+\i Test
+\i0  : same as above.\
+3. 
+\i visualize_prediction
+\i0  : same as above.\
+4. 
+\i postProcessingMorphological
+\i0  : Apply morphological post-processing. User can choose between opening and/or closing transformation on predictions (see report sect. III E). \
+5. 
+\i neighbors_processing
+\i0  : Apply neighbours based post-processing. Update patch classification based on neighbourhood (see report sect. III F).\
+\
+\
+}

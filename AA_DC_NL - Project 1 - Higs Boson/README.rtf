@@ -1,0 +1,187 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh16600\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs28 \cf0 READ ME\
+
+\i\b0\fs22 The code for the best submission that the 
+\b My Little Poly team
+\b0  got is enclosed in the folder \'93All\'94 (all means that we computed all the data at once). \
+As mentioned in the report we also did a second script in which we splitter the data according to the number of jets. This is enclosed in the folder \'93jets\'94. \
+The codes in both folder basically functions in the same way. The only difference is that the code in jet slip the data into three subpopulations and we make the \
+same computations but we replicate them three times.\
+
+\i0 \
+The best score was reach by using the 
+\b RUN.IPYNB 
+\b0 program. With which we got a score of 
+\b 0.83794
+\b0 . 
+\fs24 \
+
+\b\fs28 \
+
+\b0\fs24 This file shows the different functions used in the Higgs Boson machine learning competition and how to use the run.ipynb\
+\
+
+\b RUN.IPYNB
+\b0 \
+***************\
+1. Load training data (
+\i load_csv_data
+\i0 )\
+2. Clean missing values and standardise (
+\i standardize_original
+\i0 )\
+3. Reduce dimensions of training dataset through PCA (
+\i PCA
+\i0 )\
+4. Build polynomial basis and standardise basis (
+\i build_poly_basis
+\i0 , 
+\i standardize_basis
+\i0 )\
+5. Creates cross-validation training subsets (
+\i cross_validation
+\i0 )\
+6. Perform regression on subsets and find best parameter form grid-search (
+\i reg_logistic_regression
+\i0 )\
+	regression can be done using the following functions from 
+\b implementations.py
+\b0 :\
+	-
+\i least_squares
+\i0 \
+	-
+\i ridge_regression
+\i0 \
+	-
+\i logistic_regression
+\i0 \
+	-
+\i reg_logistic_regression
+\i0 \
+	-
+\i least_squares_GD
+\i0 \
+	-
+\i least_squares_SGD
+\i0 \
+7. Load test data, standardise and reduce dimensionality (
+\i load_csv_data
+\i0 , 
+\i standardize_test_original
+\i0 )\
+8. build same polynomial basis as for training and standardise (
+\i build_poly_basis
+\i0 , 
+\i standardized_testx_basis
+\i0 )\
+9. Regress test data, predict labels and create .csv submission (
+\i predict_labels
+\i0 , 
+\i create_csv_submission
+\i0 )\
+10. (Optional) Predict Kaggle score by regressing training dataset using trained model\
+11. (Optional) Plot Loss function grid-search\
+\
+
+\b IMPLEMENTATIONS.PY
+\b0 \
+*****************************\
+###Mandatory functions###\
+1. 
+\i least_squares_GD 
+\i0 : performs gradient descent using MSE cost function.\
+2. 
+\i least_squares_SGD
+\i0  : performs stochastic gradient descent using MSE cost function.\
+3. 
+\i least_squares
+\i0  : performs least squares regression using MSE cost function.\
+4. 
+\i ridge_regression
+\i0  : performs ridge regression using MSE cost function.\
+5. 
+\i logistic_regression
+\i0  : performs logistic regression using gradient descent using MSE cost function.\
+6. 
+\i reg_logistic_regression
+\i0  : performs penalised logistic regression using gradient descent using MSE cost function.\
+7. 
+\i compute_loss
+\i0  : computes the MSE.\
+8. 
+\i compute_logistic_loss
+\i0  : computes the MSE using the sigmoid transformation.\
+9. 
+\i sig
+\i0  : computes the sigmoid transform of any real value.\
+10. 
+\i compute_gradient
+\i0  : computes the gradient at a point.\
+###GD and SGD MAE ###\
+11. compute_subgradient : computes gradient using the MAE cost function.\
+12. compute_loss_subgradient : computes the MAE.\
+13. subgradient_descent : performs gradient descent using MAE cost function.\
+14. stochastic_subgradient_descent : performs stochastic gradient descent using MAE cost function.\
+###Standardization###\
+15. standardize_* : standardise data by centering and setting the standard deviation to 1.\
+16. build_poly_basis : build polynomial basis based on the data dimensions with different combinaisons of dimensions.\
+###cross validation###\
+17. 
+\i cross_validation_prep_
+\i0 * : creates subsets of split by jets data for cross validation.\
+18. 
+\i cross_validation
+\i0  : creates subsets of full training data for cross validation.\
+19. 
+\i cross_validation_small
+\i0  : creates subsets of subsampled training data for cross validation.\
+###Additional preprocessing###\
+20. 
+\i sliptJets
+\i0  : splits data according to jet number. \
+21. 
+\i remove_useless_column_
+\i0 * : removes missing data according to jet number.\
+22. PCA : apply PCA on training to remove dimensions with lowest standard deviation.\
+\
+\
+\
+
+\b TEST_MANDATORY_FUNCTIONS.IPYNB
+\b0 \
+***************\
+- std(): is standardising a matrix \
+- PCA : apply PCA on training to remove dimensions with lowest standard deviation.\
+-
+\i least_squares: 
+\i0 performs least squares regression using MSE cost function.\
+-
+\i ridge_regression: 
+\i0 performs ridge regression using MSE cost function.\
+-
+\i logistic_regression: 
+\i0 performs logistic regression using gradient descent using MSE cost function.\
+-
+\i reg_logistic_regression: 
+\i0 performs penalised logistic regression using gradient descent using MSE cost function.\
+-
+\i least_squares_GD: 
+\i0 performs gradient descent using MSE cost function.\
+-
+\i least_squares_SGD: 
+\i0 performs stochastic gradient descent using MSE cost function.
+\i \
+\
+
+\i0 This function implements all the other regressions that we had to implemented in order to make the best prediction possible. Since we \
+Got good results quite easily with r
+\i eg_logistic_regression 
+\i0 so we decide to dedicate all our efforts into the fine tuning of the hyperparameters\
+Gamma and Lambda. }
